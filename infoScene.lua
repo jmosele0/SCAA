@@ -52,7 +52,7 @@ function scene:show( event )
 		width = 400,
 		height = 500,
 		topPadding = -50,
-		bottomPadding = 50,
+		bottomPadding = 10,
 		horizontalScrollDisabled = true,
 		verticalScrollDisabled = false,
 		backgroundColor = {1,1,1,1},
@@ -117,37 +117,6 @@ xCount = 0
 	openingLines = display.newText(currentCountry.." has been studied by the World Justice Project and has been given the following scores out of 1:", 155, 270, 300, 200, arial, 16)
 	openingLines:setFillColor(0,0,0)
 	scroll:insert(openingLines)
-	--jake test
-	local countryTest = {}
-	local dataTest = {}
-	
-	for key,value in pairs(countryData[1]) do
-	if(key ~= "Country" and key ~= "Zimbabwe" and key ~= "Zambia") then
-	table.insert(countryTest, key)
-	table.insert(dataTest, value)
-	end end
-	
-	local sort_relative = function(ref, t, cmp)
-    local n = #ref
-    assert(#t == n)
-    local r = {}
-    for i=1,n do r[i] = i end
-    if not cmp then cmp = function(a, b) return a < b end end
-    table.sort(r, function(a, b) return cmp(ref[a], ref[b]) end)
-    for i=1,n do r[i] = t[r[i]] end
-    return r
-	end
-	
-	local sorted = sort_relative(dataTest, countryTest)
-	for key, value in pairs(sorted) do
-	print(value) end
-	
-	
-	--for key, value in pairs(countryTest) do
-	--print(value) end
-	--for key, value in pairs(dataTest) do
-	--print(value) end
-	
 	
 	
 -----------------------------------------------------------------------------------------------------------------
