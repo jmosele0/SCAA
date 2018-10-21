@@ -38,6 +38,7 @@ function scene:show( event )
  
     if ( phase == "will" ) then
 	
+	local group = display.newGroup()
 	
 
         -- Code here runs when the scene is still off screen (but is about to come on screen)
@@ -57,21 +58,33 @@ function scene:show( event )
 		backgroundColor = {1,1,1,1},
 		listener = scrollListener,
  }
- local function goBack(event)
+ 
+local function goBack(event)
 	
 	composer.gotoScene("searchScene", {effect = "slideRight", time = 500})
 	
 end
+
+local 	backButton = widget.newButton(
+		{
+			onRelease = goBack,
+			label = "X",
+			x = 300,
+			y = 80,
+			width = 80,
+			height = 80,
+		}
+		)
 -----------------------------------------------------------------------------------------------------------------
 -- Scrolling
 -----------------------------------------------------------------------------------------------------------------
 
-local image=display.newImage(event.params.countryName.."-01.png")
-	image.x=55
-	image.y=95
-	image.width=80
-	image.height=80
-	scroll:insert(image)
+local	image=display.newImage(event.params.countryName.."-01.png")
+		image.x=55
+		image.y=95
+		image.width=80
+		image.height=80
+	
 	--sceneGroup:insert(image)
 
 
@@ -99,25 +112,63 @@ xCount = 0
 
 
 
-	backButton = widget.newButton(
-	{
-	onRelease = goBack,
-	label = "X",
-	x = 300,
-	y = 80,
-	width = 80,
-	height = 80,
-	}
-	)
-	scroll:insert(backButton)
 	
-	countryInfo = display.newText( "Country information", 175, 100, arial, 16 )
+	--scroll:insert(backButton)
+	
+
+	
+	
+	-- print data
+	currentCountry = event.params.countryName
+	printIndex = 1
+	
+	countryInfo = display.newText( currentCountry, 175, 100, arial, 16 )
 	countryInfo:setFillColor( 1, 0, 0 )
-	scroll:insert(countryInfo)
-	--sceneGroup:insert(countryInfo)
-	sceneGroup:insert(scroll)
 	
-		
+	yloc = -100
+	
+	-- scroll in front of newText was removed
+	while(printIndex <= 55) do
+	for key,value in pairs(countryData[printIndex]) do 
+	if(key == "Country") then typeOfInfo = display.newText(scroll, value, -50, yloc, arial, 16)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc = yloc + 20 end end 
+	for key,value in pairs(countryData[printIndex]) do 
+	if(key == currentCountry) then typeOfInfo = display.newText(scroll, value, -50, yloc, arial, 16)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc = yloc + 20 end end
+	printIndex = printIndex + 1 
+	
+	typeOfInfo.parent = group
+	
+--[[local	paragraph = display.newText(typeOfInfo)
+	
+		paragraph.anchorX = 0.5
+		paragraph.anchorY = 0
+		paragraph.x = display.actualContentWidth/2
+		paragraph.y = 380
+		paragraph:setFillColor( 0.95, 0.95, 0.95 )
+--]]
+	scroll:insert(typeOfInfo)
+	--scroll:insert(currentCountry)
+	--maybe this could help
+	--https://forums.coronalabs.com/topic/67808-json-data-file-performance/
+	end
+	
+	hyperLink = "https://www.google.com.au/search?q="..currentCountry.."+media&source=lnms&tbm=nws"
+	--put button at bottom of page and insert have it system.openURL(hyperLink)
+	
+	
+	print(currentCountry)
+	scroll:insert(image)
+	--scroll:insert(countryInfo)
+	
+	
+	
+	-- scroll:insert(typeOfInfo)
+	--scroll:insert(countryInfo)
+	--scroll:insert(display.newText)
+	
+	
+	sceneGroup:insert(addressField)
+	sceneGroup:insert(scroll)
+	sceneGroup:insert(countryInfo)	
 	
 	
 	sceneGroup:insert(backButton)
