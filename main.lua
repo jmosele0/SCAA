@@ -59,8 +59,7 @@ end
 
 -- Add any system wide event handlers, location, key events, system resume/suspend, memory, etc.
 
--- load scene1
--- Add any system wide event handlers, location, key events, system resume/suspend, memory, etc.
-
 _G.countryData = loadFromJson("Country info.json", system.DocumentsDirectory)
+
+-- load scene1
 composer.gotoScene( "searchScene" )
