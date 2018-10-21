@@ -75,6 +75,8 @@ local 	backButton = widget.newButton(
 			height = 80,
 		}
 		)
+		
+
 -----------------------------------------------------------------------------------------------------------------
 -- Scrolling
 -----------------------------------------------------------------------------------------------------------------
@@ -98,24 +100,10 @@ local	image=display.newImage(event.params.countryName.."-01.png")
  -- constant variables for buttons
 squareSize = 80
 label = 60
-
- 
--- https://forums.coronalabs.com/topic/5665-how-to-create-buttonsobjectsvariables-dynamically-in-a-loop-in-lua/
--- local button = {}
--- for i = 1, 10 then
-	-- buttons[#buttons+1] = ui.newButton()
--- end
-
 yCount = 120
 xCount = 0
 
-
-
-
-	
-	--scroll:insert(backButton)
-	
-
+	scroll:insert(backButton)
 	
 	
 	-- print data
@@ -124,57 +112,74 @@ xCount = 0
 	
 	countryInfo = display.newText( currentCountry, 175, 100, arial, 16 )
 	countryInfo:setFillColor( 1, 0, 0 )
+	scroll:insert(countryInfo)
 	
-	yloc = -100
+	openingLines = display.newText(currentCountry.." has been studied by the World Justice Project and has been given the following scores out of 1:", 155, 270, 300, 200, arial, 16)
+	openingLines:setFillColor(0,0,0)
+	scroll:insert(openingLines)
+	--jake test
+	local countryTest = {}
+	local dataTest = {}
 	
-	-- scroll in front of newText was removed
-	while(printIndex <= 55) do
-	for key,value in pairs(countryData[printIndex]) do 
-	if(key == "Country") then typeOfInfo = display.newText(scroll, value, -50, yloc, arial, 16)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc = yloc + 20 end end 
-	for key,value in pairs(countryData[printIndex]) do 
-	if(key == currentCountry) then typeOfInfo = display.newText(scroll, value, -50, yloc, arial, 16)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc = yloc + 20 end end
-	printIndex = printIndex + 1 
+	for key,value in pairs(countryData[1]) do
+	if(key ~= "Country" and key ~= "Zimbabwe" and key ~= "Zambia") then
+	table.insert(countryTest, key)
+	table.insert(dataTest, value)
+	end end
 	
-	typeOfInfo.parent = group
-	
---[[local	paragraph = display.newText(typeOfInfo)
-	
-		paragraph.anchorX = 0.5
-		paragraph.anchorY = 0
-		paragraph.x = display.actualContentWidth/2
-		paragraph.y = 380
-		paragraph:setFillColor( 0.95, 0.95, 0.95 )
---]]
-	scroll:insert(typeOfInfo)
-	--scroll:insert(currentCountry)
-	--maybe this could help
-	--https://forums.coronalabs.com/topic/67808-json-data-file-performance/
+	local sort_relative = function(ref, t, cmp)
+    local n = #ref
+    assert(#t == n)
+    local r = {}
+    for i=1,n do r[i] = i end
+    if not cmp then cmp = function(a, b) return a < b end end
+    table.sort(r, function(a, b) return cmp(ref[a], ref[b]) end)
+    for i=1,n do r[i] = t[r[i]] end
+    return r
 	end
 	
-	hyperLink = "https://www.google.com.au/search?q="..currentCountry.."+media&source=lnms&tbm=nws"
+	local sorted = sort_relative(dataTest, countryTest)
+	for key, value in pairs(sorted) do
+	print(value) end
+	
+	
+	--for key, value in pairs(countryTest) do
+	--print(value) end
+	--for key, value in pairs(dataTest) do
+	--print(value) end
+	
+	
+	
+-----------------------------------------------------------------------------------------------------------------
+-- Loops through tables and prints out the data for the countries
+-----------------------------------------------------------------------------------------------------------------
+	yloc = 335
+	yloc1 = 270
+	while(printIndex <= 55) do
+	for key,value in pairs(countryData[printIndex]) do 
+	if(key == "Country") then typeOfInfo = display.newText(value..":", 155, yloc, 300, 200, arial, 12)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc = yloc + 50 scroll:insert(typeOfInfo) end end 
+	for key,value in pairs(countryData[printIndex]) do 
+	if(key == currentCountry) then typeOfInfo = display.newText(value, 20, yloc1, arial, 12)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc1 = yloc1 + 50 scroll:insert(typeOfInfo) end end
+	printIndex = printIndex + 1 
+
+	end
+	
+	hyperLink = "https://www.google.com.au/search?q="..currentCountry.."+media&source=lnms&tbm=nws" --hyperlink
 	--put button at bottom of page and insert have it system.openURL(hyperLink)
+	local newsButton  = display.newText("Country News (Click Me!)", 175, 150, arial, 16)
+	newsButton:setFillColor( 0, 0, 0 )
+	function newsButton:tap()
+	system.openURL( hyperLink ) -- open URL in browser
+	end
+
+	newsButton:addEventListener('tap', newsButton) -- when text is pressed it opens the url
 	
 	
-	print(currentCountry)
 	scroll:insert(image)
-	--scroll:insert(countryInfo)
-	
-	
-	
-	-- scroll:insert(typeOfInfo)
-	--scroll:insert(countryInfo)
-	--scroll:insert(display.newText)
-	
-	
+	scroll:insert(newsButton)
 	sceneGroup:insert(addressField)
 	sceneGroup:insert(scroll)
-	sceneGroup:insert(countryInfo)	
-	
-	
 	sceneGroup:insert(backButton)
-
-		
---	buttons:addEventListener("tap", buttons )
 	
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
