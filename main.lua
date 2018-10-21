@@ -25,7 +25,7 @@ local json = require( "json" )
 function loadFromJson( filename, base )
 	
 	-- set default base dir if none specified
-	if not base then base = system.DocumentsDirectory; end
+	if not base then base = system.ResourceDirectory; end
 
 	-- create a file path for corona i/o
 	local path = system.pathForFile( filename, base )
@@ -59,7 +59,7 @@ end
 
 -- Add any system wide event handlers, location, key events, system resume/suspend, memory, etc.
 
-_G.countryData = loadFromJson("Country info.json", system.DocumentsDirectory)
+_G.countryData = loadFromJson("Country info.json", system.ResourceDirectory)
 
 -- load scene1
-composer.gotoScene( "searchScene" )
+composer.gotoScene( "openingScene" )
