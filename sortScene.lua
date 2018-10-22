@@ -47,12 +47,16 @@ function scene:show( event )
 		-- countryData[56][i]
 	 end
 --]]	
- 
+local 	title = display.newText( "Sort By", display.contentCenterX, 8, native.systemFont, 30)
+		title:setFillColor( 0, 0, 0 )
+local 	background = display.setDefault("background", 220, 20, 60) 
+		
+		
 -- Function to handle button events
-local function sortOverall( event )
+local function rank( event )
  
-    composer.gotoScene("rankScene", {effect="slideLeft", time=500, params=customParams})
-	print("overall ranking")
+    composer.gotoScene("rankScene", {effect="slideLeft", time=500})
+	--print("overall ranking")
 end
 
 
@@ -62,22 +66,31 @@ local function goBack(event)
 	
 end
 
-local		backButton = widget.newButton(
-			{
-				onRelease = goBack,
-				label = "X",
-				x = 300,
-				y = 80,
-				width = 80,
-				height = 80,
-			}
-			)
-	 
--- Create the widget
-local overallBtn = widget.newButton(
+local backBtn = widget.newButton(
+    {
+        label = "X",
+        onRelease = goBack,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 40,
+        height = 40,
+		x = 290,
+		y = 1, 
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)	 
+-- -----------------------------------------------------------------------------------
+-- overall button
+-- -----------------------------------------------------------------------------------
+ 
+	local overallBtn = widget.newButton(
     {
         label = "overall Score",
-        onRelease = sortOverall,
+        onRelease = rank,
         emboss = false,
         -- Properties for a rounded rectangle button
         shape = "roundedRect",
@@ -88,14 +101,124 @@ local overallBtn = widget.newButton(
         strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
         strokeWidth = 4
     }
-)
-	
+)	
 	overallBtn.x = display.contentCenterX
-	overallBtn.y = display.contentCenterY
+	overallBtn.y = 100
+-- -----------------------------------------------------------------------------------
+--	factor 1 & 3 button/factor 1
+-- -----------------------------------------------------------------------------------
+ 
+	local factor1Btn = widget.newButton(
+    {
+        label = "Government Accountability",
+        onRelease = rank,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 300,
+        height = 40, 
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)	
+	factor1Btn.x = display.contentCenterX
+	factor1Btn.y = 160
+-- -----------------------------------------------------------------------------------
+--	factor 2 button
+-- -----------------------------------------------------------------------------------
+ 	local factor2Btn = widget.newButton(
+    {
+        label = "Absence of Corruption",
+        onRelease = rank,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 300,
+        height = 40, 
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)	
+	factor2Btn.x = display.contentCenterX
+	factor2Btn.y = 220
+-- -----------------------------------------------------------------------------------
+--	factor 4 button/factor 3
+-- -----------------------------------------------------------------------------------
+	local factor3Btn = widget.newButton(
+    {
+        label = "Fundamental Rights",
+        onRelease = rank,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 300,
+        height = 40, 
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)	
+	factor3Btn.x = display.contentCenterX
+	factor3Btn.y = 280
+-- -----------------------------------------------------------------------------------
+--	factor 5 button/factor 4
+-- -----------------------------------------------------------------------------------
+	local factor4Btn = widget.newButton(
+    {
+        label = "Order and Security",
+        onRelease = rank,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 300,
+        height = 40, 
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)	
+	factor4Btn.x = display.contentCenterX
+	factor4Btn.y = 340
+-- -----------------------------------------------------------------------------------
+--	factor 7 & 8 button/ factor 5
+-- -----------------------------------------------------------------------------------
+ 		local factor5Btn = widget.newButton(
+    {
+        label = "Civil & Criminal Justice",
+        onRelease = rank,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 300,
+        height = 40, 
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)	
+	factor5Btn.x = display.contentCenterX
+	factor5Btn.y = 400
 	
 	
+-- -----------------------------------------------------------------------------------
+--
+-- -----------------------------------------------------------------------------------
+ 
+	sceneGroup:insert(title)
 	sceneGroup:insert(overallBtn)
-	sceneGroup:insert(backButton)
+	sceneGroup:insert(factor1Btn)
+	sceneGroup:insert(factor2Btn)
+	sceneGroup:insert(factor3Btn)
+	sceneGroup:insert(factor4Btn)
+	sceneGroup:insert(factor5Btn)
+	sceneGroup:insert(backBtn)
 	
 	
 	 elseif ( phase == "did" ) then
